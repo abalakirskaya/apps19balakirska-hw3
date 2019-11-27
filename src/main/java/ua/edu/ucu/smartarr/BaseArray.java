@@ -3,9 +3,11 @@ package ua.edu.ucu.smartarr;
 
 // Base array for decorators
 public class BaseArray implements SmartArray {
-    private Integer[] integer_elements;
-    public BaseArray(Integer[] ints){
-        this.integer_elements = ints;
+    private Object[] arr;
+    public BaseArray(Object[] array){
+
+        this.arr = new Object[array.length];
+        System.arraycopy(array, 0, arr, 0, size());
     }
 
     public BaseArray() {
@@ -13,24 +15,19 @@ public class BaseArray implements SmartArray {
 
     @Override
     public Object[] toArray() { //return array with SmartArray elements
-        return this.getElements();
+        Object[] result = new Object[size()];
+        System.arraycopy(arr, 0, result, 0, size());
+        return result;
     }
 
     @Override
     public String operationDescription() { // return current operation name applied to SmartArray
-        return "Smart Array";
+        return "Base Array";
     }
 
     @Override
     public int size() { // return SmartArray size
-        return integer_elements.length;
+        return arr.length;
     }
 
-    public Integer[] getElements() {
-        return integer_elements;
-    }
-
-    public void setElements(Integer[] new_integers) {
-        this.integer_elements = new_integers;
-    }
 }

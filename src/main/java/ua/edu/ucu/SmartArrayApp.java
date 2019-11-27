@@ -46,16 +46,39 @@ public class SmartArrayApp {
 
     public static String[]
             findDistinctStudentNamesFrom2ndYearWithGPAgt4AndOrderedBySurname(Student[] students) {
-        ArrayList<String> our_string = new ArrayList<>();
-        int cnt = 0;
-        for (Student student : students){
-            if (student.getYear() == 2 && student.getGPA() > 4){
-                our_string.add(student.getName() + " " + student.getSurname());
-                cnt += 1;
-            }
-        }
+       MyPredicate pred = new MyPredicate() {
+           @Override
+           public boolean test(Object t) {
+               int year = 2;
+               int min_GPA = 4;
+               Student student = (Student) t;
+               return (student.getGPA() >= min_GPA && student.getYear() == year);
+           }
+       };
 
-        Arrays.sort(our_string.toArray(new String[cnt]));
-        return our_string.toArray(new String[cnt]);
+       MyComparator comp = new MyComparator() {
+           @Override
+           public int compare(Object o1, Object o2) {
+               Student first_st = (Student) o1;
+               Student second_st = (Student) o2;
+               return (first_st.getSurname().compareTo(second_st.getSurname()));
+           }
+       };
+
+       MyFunction function = new MyFunction() {
+           @Override
+           public Object apply(Object t) {
+               Student student = (Student) t;
+               return student.getSurname() + " " + student.getName();
+           }
+       };
+
+       SmartArray smartArray = new BaseArray(students);
+       smartArray = new FilterDecorator(smartArray, pred);
+       smartArray = new SortDecorator(smartArray, comp);
+       smartArray = new MapDecorator(smartArray, function);
+       smartArray = new DistinctDecorator(smartArray);
+       Object[] students_result = smartArray.toArray();
+       return Arrays.stream(students_result).toArray(String[]::new);
     }
 }

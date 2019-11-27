@@ -1,6 +1,6 @@
 package ua.edu.ucu.smartarr;
 
-abstract class SmartArrayDecorator extends BaseArray {
+abstract class SmartArrayDecorator implements SmartArray {
 
     protected SmartArray smart_array;
 
