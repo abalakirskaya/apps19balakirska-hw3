@@ -31,7 +31,8 @@ public class FilterDecorator extends SmartArrayDecorator {
 
     @Override
     public int size() {
-        return smart_array.size();
+
+       return smart_array.size();
     }
 
 }

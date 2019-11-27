@@ -10,8 +10,6 @@ public class BaseArray implements SmartArray {
         System.arraycopy(array, 0, arr, 0, size());
     }
 
-    public BaseArray() {
-    }
 
     @Override
     public Object[] toArray() { //return array with SmartArray elements
@@ -27,6 +25,7 @@ public class BaseArray implements SmartArray {
 
     @Override
     public int size() { // return SmartArray size
+
         return arr.length;
     }
 
